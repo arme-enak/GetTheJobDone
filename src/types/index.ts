@@ -1,4 +1,5 @@
 import { Request } from 'express';
+import { Role, TaskStatus, Priority } from '@prisma/client';
 
 export interface AuthRequest extends Request {
     user?: {
@@ -8,19 +9,19 @@ export interface AuthRequest extends Request {
     };
 }
 
-export interface ApiResponse<T> {
-    success: boolean;
-    message: string;
-    data?: T;
-    error?: string;
-}
+// export interface ApiResponse<T> {
+//     success: boolean;
+//     message: string;
+//     data?: T;
+//     error?: string;
+// }
 
 export interface User {
     id: string;
     email: string;
     username: string;
     password: string;
-    role: 'admin' | 'user' | 'moderator';
+    role: Role;
     isActive: boolean;
     createdAt: Date;
     updatedAt: Date;
@@ -32,8 +33,8 @@ export interface Task {
     id: string;
     title: string;
     description: string | null;
-    status: 'pending' | 'in-progress' | 'completed' | 'cancelled';
-    priority: 'low' | 'medium' | 'high' | 'critical';
+    status: TaskStatus;
+    priority: Priority;
     dueDate: Date | null;
     createdAt: Date;
     updatedAt: Date;
@@ -45,16 +46,4 @@ export interface UserTask {
     userId: string;
     taskId: string;
     assignedAt: Date;
-    user?: User;
-    task?: Task;
 }
-
-// export interface Project {
-//     id: string;
-//     name: string;
-//     description: string | null;
-//     ownerId: string;
-//     status: 'active' | 'archived' | 'deleted';
-//     createdAt: Date;
-//     updatedAt: Date;
-// }

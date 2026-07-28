@@ -1,7 +1,5 @@
 node_modules/
 dist/
 .env
-env.d.ts
 *.log
 nodemon.json
-/src/generated/prisma

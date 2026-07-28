@@ -1,11 +1,10 @@
-import { Response } from 'express';
-import { AuthRequest } from '../../types/index';
+import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { errorHandler } from '../../middleware/errorHandler';
 
 const prisma = new PrismaClient();
 
-export const getTask = async (req: AuthRequest, res: Response) => {
+export const getTask = async (req: Request, res: Response) => {
     const id = String(req.params.id); //req.params always returns string
 
     const task = await prisma.task.findUnique({
@@ -22,7 +21,7 @@ export const getTask = async (req: AuthRequest, res: Response) => {
     });
 };
 
-export const getAllTasks = async (req: AuthRequest, res: Response) => {
+export const getAllTasks = async (req: Request, res: Response) => {
     const tasks = await prisma.task.findMany();
 
     res.status(200).json({

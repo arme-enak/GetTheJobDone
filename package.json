@@ -15,17 +15,20 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "start": "node dist/server.js",
     "dev": "nodemon --exec ts-node src/server.ts"
   },
   "dependencies": {
+    "@pothos/core": "^4.13.1",
     "@prisma/client": "^6.19.3",
     "bcrypt": "^6.0.0",
     "express": "^5.2.1",
+    "graphql": "^16.14.1",
+    "graphql-yoga": "^5.21.2",
     "jsonwebtoken": "^9.0.3",
     "prisma": "^6.19.3",
+    "ruru": "^2.0.1",
     "zod": "^4.4.3"
   },
   "devDependencies": {
@@ -38,5 +41,11 @@
     "nodemon": "^3.1.14",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.3"
+  },
+  "allowScripts": {
+    "@prisma/client@6.19.3": true,
+    "@prisma/engines@6.19.3": true,
+    "bcrypt@6.0.0": true,
+    "prisma@6.19.3": true
   }
 }

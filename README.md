@@ -1,6 +1,6 @@
 # GetTheJobDone
 
-A Task Management API built with TypeScript, Express.js, and Prisma.
+A Task Management API built with TypeScript, Express.js, Prisma, and GraphQL.
 
 ## Features
 
@@ -11,6 +11,7 @@ A Task Management API built with TypeScript, Express.js, and Prisma.
 - 👥 User management
 - 🗄️ PostgreSQL with Prisma ORM
 - 📊 Task status and priority tracking
+- 🚀 GraphQL API Version (Bonus)
 
 ## Tech Stack
 
@@ -48,7 +49,7 @@ npm install
 Create a `.env` file in the root directory: (based on sample)
 
 ```env
-PORT=3000
+PORT=XXXX
 NODE_ENV=development
 DATABASE_URL="postgresql://username:password@localhost:5432/your-database?schema=public"
 JWT_SECRET="your-secret-key"
@@ -59,7 +60,9 @@ BCRYPT_SALT_ROUNDS=10
 ### 4. Run database migrations
 
 ```bash
-npx prisma migrate dev --name init
+npx prisma generate
+npx prisma migrate deploy
+npx prisma migrate dev
 ```
 
 ### 5. Start development server
@@ -68,18 +71,20 @@ npx prisma migrate dev --name init
 npm run dev
 ```
 
-The server will run at `http://localhost:3000`
+The server will run at `http://localhost:XXXX`
 
 ## API Endpoints
 
-### Authentication
+### REST API
+
+#### Authentication
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | POST | `/api/auth/register` | Register new user |
 | POST | `/api/auth/login` | Login user |
 
-### User Routes
+#### User Routes
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
@@ -89,14 +94,14 @@ The server will run at `http://localhost:3000`
 | GET | `/api/users/tasks` | Get all tasks assigned to current user |
 | POST | `/api/users/tasks/:id/assign` | Assign a task to current user |
 
-### Task Routes
+#### Task Routes
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | GET | `/api/tasks` | Get all tasks |
 | GET | `/api/tasks/:id` | Get task by ID |
 
-### Admin Routes
+#### Admin Routes
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
@@ -108,11 +113,28 @@ The server will run at `http://localhost:3000`
 | PATCH | `/api/admin/tasks/:id` | Update task |
 | DELETE | `/api/admin/tasks/:id` | Delete task |
 
+### GraphQL API
+
+| Endpoint | Description |
+|----------|-------------|
+| `/graphql` | GraphiQL playground |
+
+> **Authentication:** Include `Authorization: Bearer <token>` header for protected queries/mutations.
+
+
 ## Project Structure
+
 ```plaintext
 src/
 ├── config/          # Configuration files
-├── modules/         # Feature modules
+├── graphql/         # GraphQL layer
+│   ├── server.ts    # Yoga server config
+│   ├── context.ts   # GraphQL context (Prisma + Auth)
+│   └── schema/      # Resolvers 
+│       ├── types/
+│       ├── queries/
+│       └── mutations/
+├── modules/         # Feature modules 
 │   ├── admin/       # Admin module
 │   ├── auth/        # Authentication module
 │   ├── user/        # User module
