@@ -4,4 +4,3 @@ dist/
 env.d.ts
 *.log
 nodemon.json
-/src/generated/prisma
