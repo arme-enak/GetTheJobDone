@@ -1,8 +1,11 @@
+import cors from 'cors';
 import express from 'express';
 import userRoutes from './modules/user/user.routes';
 import taskRoutes from './modules/task/task.routes';
 import authRoutes from './modules/auth/auth.routes';
 import adminRoutes from './modules/admin/admin.routes';
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './docs/swagger';
 import { notFound } from './middleware/notFound';
 import { appError } from './middleware/errorHandler';
 import { yoga } from './graphql/server';
@@ -10,12 +13,15 @@ import { yoga } from './graphql/server';
 //app.use(cors());
 const app = express();
 
+app.use(cors());
 app.use(express.json());
+
 app.use('/api', userRoutes);
 app.use('/api', taskRoutes);
 app.use('/auth', authRoutes);
 app.use('/api', adminRoutes);
 app.use('/graphql', yoga);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.get('/healthCheck', (req, res) => {
     res.send('Hello World!');
